@@ -1,0 +1,134 @@
+:root {
+  --beat: 0;
+  --heart-ui-scale: 1;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #000000;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  cursor: grab;
+}
+
+body.is-dragging {
+  cursor: grabbing;
+}
+
+.halo {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, #2C071B 0%, #090E22 38%, #000000 72%);
+  opacity: calc(0.58 + var(--beat, 0) * 0.42);
+  will-change: opacity;
+}
+
+#bg-canvas,
+#heart-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  touch-action: none;
+}
+
+#bg-canvas {
+  z-index: 2;
+}
+
+#heart-canvas {
+  z-index: 3;
+  mix-blend-mode: screen;
+  mix-blend-mode: plus-lighter;
+}
+
+.heart-text {
+  position: fixed;
+  left: 50%;
+  top: 47.5%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.36em;
+  transform: translate(-50%, -50%) scale(var(--heart-ui-scale, 1));
+  transform-origin: center center;
+  pointer-events: none;
+  color: #fff5f9;
+  font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(0.58rem, calc(min(100vw, 100vh) * 0.0235), 1.2rem);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-shadow:
+    0 1px 4px rgba(0, 0, 0, 0.95),
+    0 0 10px rgba(255, 45, 120, 0.65),
+    0 0 22px rgba(255, 45, 120, 0.32);
+  opacity: 0;
+  transition: opacity 1.3s ease;
+  will-change: transform, opacity;
+}
+
+.heart-text.is-visible {
+  opacity: 1;
+}
+
+.heart-text-line {
+  display: flex;
+  align-items: center;
+}
+
+.star-dot {
+  display: inline-flex;
+  justify-content: center;
+  width: 1.55em;
+  margin-right: 0.22em;
+  font-size: 0.92em;
+}
+
+.star-label {
+  display: inline-block;
+}
+
+.caption {
+  position: fixed;
+  left: 50%;
+  top: calc(50% + min(100vw, 100vh) * 0.35);
+  z-index: 4;
+  transform: translateX(-50%);
+  color: rgba(255, 168, 204, 0.85);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: clamp(0.68rem, 1.3vw, 0.82rem);
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.caption.is-visible {
+  opacity: 1;
+}
+
+.caption[hidden] {
+  display: none;
+}
